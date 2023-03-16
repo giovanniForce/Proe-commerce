@@ -63,6 +63,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('api-auth/', include('rest_framework.urls')),
     # path('api/', include(router.urls))  # Il faut bien penser à ajouter les urls du router dans la liste des urls disponibles.
-    path('users', include('user_authentication.urls'))
+    path('auth/', include('user_authentication.urls.auth_urls')),
+    path('users/', include('user_authentication.urls.user_urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -1,2 +1,3 @@
 from .registration_serializer import UserRegistrationSerializer
 from .user_serializer import UserDetailsSerializer, UserSerializer
+from .oath2_provider_serializer import Oauth2ProviderLoginSerializer

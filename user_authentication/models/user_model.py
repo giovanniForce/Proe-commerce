@@ -44,11 +44,10 @@ class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     phone_number = models.IntegerField(unique=False, null=True, default=0)
-    is_shop_owner = models.BooleanField(default=False)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     # image = models.ImageField(blank=True, null=True, upload_to=get_upload_file_doc)
-    data_join = models.DateTimeField(auto_now=True)
+    data_joined = models.DateTimeField(auto_now=True)
     username = None
 
     USERNAME_FIELD = 'email'
@@ -60,6 +59,6 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
-        app_label = 'users'
+        app_label = 'user_authentication'
         db_table = 'user_authentication'
     

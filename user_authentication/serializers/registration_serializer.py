@@ -26,9 +26,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         first_name=self.validated_data["first_name"],
         last_name=self.validated_data["last_name"],
         is_superuser=self.validated_data["is_superuser"],
-        is_admin=self.validated_data["is_admin"],
-        is_shop_owner= False,
-        created_by=self.validated_data["created_by"],
+        is_admin=self.validated_data["is_admin"]
         )
         password = self.validated_data["password"]
         password2 = self.validated_data["password2"]

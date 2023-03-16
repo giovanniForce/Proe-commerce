@@ -191,8 +191,94 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'media/'
-# AUTH_USER_MODEL='user_authentication.User'
+AUTH_USER_MODEL='user_authentication.User'
 CORS_ORIGIN_ALLOW_ALL = True
 SWAGGER_SETTINGS = {
    'USE_SESSION_AUTH': True
 }
+# all-auth registration settings
+
+# Sets the number of days within which an account should be activated.
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+
+# You can use ‘mandatory’ to block a user from logging in until
+# the email gets verified
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_VERIFICATION = "optional"
+
+
+# The maximum number of login attempts can be set, and
+# the user gets blocked from logging back in until a timeout.
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+
+# 1 day. Time period, in seconds, from last unsuccessful login attempt,
+# during which the user is prohibited from trying to log in
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400
+
+# Successfully logout will be redirected here (or any other page)
+ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login/"
+
+# Successfully login will be redirected here
+# redirects to profile (# default to /accounts/profile) page by default
+# LOGIN_REDIRECT_URL = "/accounts/email/"
+LOGIN_REDIRECT_URL ='/'
+
+
+# Confirm email when the user clicks on activation Link
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+# Login the user on Email confirmation
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = "email"
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_USER_MODEL_EMAIL_FIELD = "email"
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_EMAIL_VERIFICATION = False
+
+
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
+EMAIL_CONFIRMATION = r"^auth/confirm-email/(?P<key>[-:\w]+)$"
+
+
+PASSWORD_RESET = (
+    r"^auth/password/reset/confirm/"
+    "(?P<uidb64>[0-9A-Za-z_\-]+)-"
+    "(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})$"
+)
+
+REST_USE_JWT = True
+# JWT_AUTH_COOKIE = "auth"
+
+
+# Django OAuth Toolkit settings
+OAUTH2_PROVIDER_APPLICATION_MODEL = "oauth2_provider.Application"
+OAUTH2_PROVIDER_ACCESS_TOKEN_MODEL = "oauth2_provider.AccessToken"
+OAUTH2_PROVIDER = {
+    # Access Token Life Duration
+    "ACCESS_TOKEN_EXPIRE_SECONDS": 6000, ## 600,
+    "REFRESH_TOKEN_EXPIRE_SECONDS": 2628100,  # 36000,
+    # this is the list of available scopes
+    "SCOPES": {
+        "read": "Read scope",
+        "write": "Write scope",
+        "groups": "Access to your groups",
+    },
+}
+# REST_AUTH_REGISTER_SERIALIZERS = {
+#     "REGISTER_SERIALIZER": "users.serializers.user_registration.UserRegisterSerializer",
+# }
