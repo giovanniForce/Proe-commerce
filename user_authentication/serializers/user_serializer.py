@@ -9,13 +9,13 @@ User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     # image = serializers.SerializerMethodField()
-    image_url = serializers.SerializerMethodField('get_image_url')
+    # image_url = serializers.SerializerMethodField('get_image_url')
     class Meta:
         model = User
         exclude = ('password',)
         
-    def get_image_url(self, obj):
-        return obj.image.url if obj.image else None
+    # def get_image_url(self, obj):
+    #     return obj.image.url if obj.image else None
     
     # def get_image(self, obj):
     #     return obj.get_image()

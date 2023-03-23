@@ -3,7 +3,7 @@ from django.conf.urls import include
 from django.urls import path, re_path
 from django.conf import settings
 import oauth2_provider.views as oauth2_views
-from user_authentication.views import UserRegistrationView, LoginView, LogoutView, VerifyEmailView, CustomConfirmEmailView
+from user_authentication.views import UserRegistrationView, LoginView, LogoutView, VerifyEmailView, CustomConfirmEmailView, UpdatePasswordView
 # OAuth2 provider endpoints
 oauth2_endpoint_views = [
     path('authorize/', oauth2_views.AuthorizationView.as_view(), name="authorize"),
@@ -35,6 +35,7 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="rest_login"),
     path("logout/", LogoutView.as_view(), name="rest_logout"),
     path("accounts/registration/", UserRegistrationView.as_view(), name="user_registration"),
+    path("password/update/", UpdatePasswordView.as_view(), name="user_password_update"),
 
     path(
         "accounts/email/verification/",
