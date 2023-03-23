@@ -2,3 +2,6 @@ from .registration_serializer import UserRegistrationSerializer
 from .user_serializer import UserDetailsSerializer, UserSerializer
 from .oath2_provider_serializer import Oauth2ProviderLoginSerializer
 from .update_password_serializer import UpdatePasswordSerializer
+from .access_token_mgt_serializer import TokenRefreshSerializer, TokenSerializer
+from .permission_serializer import *
+from .group_serializers import *
