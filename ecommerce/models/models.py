@@ -54,9 +54,11 @@ class Article(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     active = models.BooleanField(default=False)
-    price = models.DecimalField(max_digits=4, decimal_places=2)
+    color = models.CharField(max_length=255, default='white')
+    price = models.IntegerField()
 
     product = models.ForeignKey('ecommerce.Product', on_delete=models.CASCADE, related_name='articles')
 
     def __str__(self):
         return self.name
+    

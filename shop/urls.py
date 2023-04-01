@@ -23,6 +23,7 @@ from rest_framework import permissions
 from django.conf.urls.static import static
 import oauth2_provider.views as oauth2_views
 from django.conf import settings
+
 # Swagger configurations
 
 schema_view = get_schema_view(
@@ -38,22 +39,6 @@ schema_view = get_schema_view(
    permission_classes=(permissions.AllowAny,), 
 )
 
-from ecommerce.views import ArticleViewset, CategoryViewset, ProductViewset, \
-    AdminCategoryViewset, AdminArticleViewset, AdminProductViewset
-
-    # Ici nous créons notre routeur
-router = routers.SimpleRouter()
-# Puis lui déclarons une url basée sur le mot clé ‘category’ et notre view
-# afin que l’url générée soit celle que nous souhaitons ‘/api/category/’
-router.register('category', CategoryViewset, basename='category'),
-router.register('product', ProductViewset, basename='product'),
-router.register('article', ArticleViewset, basename='article'),
-
-
-router.register('admin/category', AdminCategoryViewset, basename='admin-category')
-router.register('admin/article', AdminArticleViewset, basename='admin-article')
-router.register('admin/product', AdminProductViewset, basename='admin-product')
-
 
  
 urlpatterns = [
@@ -61,9 +46,11 @@ urlpatterns = [
     path('redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     # App routes
     path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')),
     # path('api-auth/', include('rest_framework.urls')),
     # path('api/', include(router.urls))  # Il faut bien penser à ajouter les urls du router dans la liste des urls disponibles.
     path('auth/', include('user_authentication.urls.auth_urls')),
     path('users/', include('user_authentication.urls.user_urls')),
+    path('commerce/', include('ecommerce.urls.ecom_urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
