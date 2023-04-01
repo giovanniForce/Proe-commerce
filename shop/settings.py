@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     
     'ecommerce',
     'user_authentication',
+    'django_filters'
 ]
 
 

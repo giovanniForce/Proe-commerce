@@ -1,14 +1,16 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 
 # Create your views here.
 
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 from rest_framework.response import Response
  
-from ecommerce.models import Article, Category, Product
-from ecommerce.Serializers import ArticleSerializer, CategoryDetailSerializer, CategoryListSerializer, ProductDetailSerializer, ProductListSerializer
+from ecommerce.models.models import Article, Category, Product
+from ecommerce.serializers.Serializers import ArticleSerializer, CategoryDetailSerializer, CategoryListSerializer, ProductDetailSerializer, ProductListSerializer
 
 
 class MultipleSerializerMixin:
@@ -25,6 +27,11 @@ class MultipleSerializerMixin:
 class CategoryViewset(ReadOnlyModelViewSet):
  
     serializer_class = CategoryListSerializer
+    #filter_backends=[DjangoFilterBackend]
+    #filterset_fields = ['Category_id']
+    filter_backends=[SearchFilter]
+    search_fields = ['name', 'description']
+
 
     # Ajoutons un attribut de classe qui nous permet de définir notre serializer de détail
     detail_serializer_class = CategoryDetailSerializer
@@ -50,6 +57,8 @@ class ProductViewset(ReadOnlyModelViewSet): #récupérer les produits d’une ca
  
     serializer_class = ProductListSerializer
     detail_serializer_class = ProductDetailSerializer
+    filter_backends=[SearchFilter]
+    search_fields = ['name', 'description']
  
     def get_queryset(self):
     # Nous récupérons tous les produits dans une variable nommée queryset
@@ -69,6 +78,8 @@ class ProductViewset(ReadOnlyModelViewSet): #récupérer les produits d’une ca
 class ArticleViewset(ReadOnlyModelViewSet):
 
     serializer_class = ArticleSerializer
+    filter_backends=[SearchFilter]
+    search_fields = ['name', 'description']
 
     def get_queryset(self):
         queryset = Article.objects.filter(active=True)
@@ -83,12 +94,16 @@ class ArticleViewset(ReadOnlyModelViewSet):
 class AdminCategoryViewset(MultipleSerializerMixin, ModelViewSet):
 
      serializer_class = CategoryListSerializer
+     filter_backends=[SearchFilter]
+     search_fields = ['name', 'description']
      detail_serializer_class = CategoryDetailSerializer
      queryset = Category.objects.all()
 
 class AdminProductViewset(MultipleSerializerMixin, ModelViewSet):
 
      serializer_class = ProductListSerializer
+     filter_backends=[SearchFilter]
+     search_fields = ['name', 'description']
      detail_serializer_class = ProductDetailSerializer
      queryset = Product.objects.all()
 
@@ -97,4 +112,6 @@ class AdminProductViewset(MultipleSerializerMixin, ModelViewSet):
 class AdminArticleViewset(ModelViewSet):
 
      serializer_class = ArticleSerializer
+     filter_backends=[SearchFilter]
+     search_fields = ['name', 'description']
      queryset = Article.objects.all()
