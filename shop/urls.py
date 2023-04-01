@@ -51,6 +51,7 @@ urlpatterns = [
     # path('api/', include(router.urls))  # Il faut bien penser à ajouter les urls du router dans la liste des urls disponibles.
     path('auth/', include('user_authentication.urls.auth_urls')),
     path('users/', include('user_authentication.urls.user_urls')),
-    path('commerce/', include('ecommerce.urls.ecom_urls')),
+    path('products/', include('ecommerce.urls.ecom_urls')),
+    path('basket/', include('basket.urls'))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
