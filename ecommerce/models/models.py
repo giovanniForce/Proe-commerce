@@ -56,9 +56,11 @@ class Article(models.Model):
     active = models.BooleanField(default=False)
     color = models.CharField(max_length=255, default='white')
     price = models.IntegerField()
+    photo = models.ImageField(upload_to='', default='')
 
     product = models.ForeignKey('ecommerce.Product', on_delete=models.CASCADE, related_name='articles')
 
     def __str__(self):
         return self.name
     
+

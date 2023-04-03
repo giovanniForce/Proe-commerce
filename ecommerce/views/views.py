@@ -10,7 +10,7 @@ from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 from rest_framework.response import Response
  
 from ecommerce.models.models import Article, Category, Product
-from ecommerce.serializers.Serializers import ArticleSerializer, CategoryDetailSerializer, CategoryListSerializer, ProductDetailSerializer, ProductListSerializer
+from ecommerce.serializers.Serializers import ArticleSerializer, CategoryDetailSerializer, CategoryListSerializer, ProductDetailSerializer, ProductListSerializer, ArticleDetailSerializer
 
 
 class MultipleSerializerMixin:
@@ -75,19 +75,36 @@ class ProductViewset(ReadOnlyModelViewSet): #récupérer les produits d’une ca
         return Response()
     
 
-class ArticleViewset(ReadOnlyModelViewSet):
+class ArticleViewset(ModelViewSet):
 
     serializer_class = ArticleSerializer
+    detailart_serializer_class = ArticleDetailSerializer
+
     filter_backends=[SearchFilter]
     search_fields = ['name', 'description']
 
     def get_queryset(self):
+
+        # Nous récupérons tous les produits dans une variable nommée queryset
         queryset = Article.objects.filter(active=True)
+
+        # Vérifions la présence du paramètre ‘product_id’ dans 
+        # l’url et si oui alors appliquons notre filtre
         product_id = self.request.GET.get('product_id')
         if product_id is not None:
             queryset = queryset.filter(product_id=product_id)
         return queryset
     
+    def get_serializer_class(self):
+        # Si l'action demandée est retrieve nous retournons le serializer de détail
+        if self.action == 'retrieve':
+            return self.detailart_serializer_class
+        return super().get_serializer_class()
+    
+
+   
+   
+    #Partie réservée aux administrateurs
 
 
 
@@ -98,6 +115,7 @@ class AdminCategoryViewset(MultipleSerializerMixin, ModelViewSet):
      search_fields = ['name', 'description']
      detail_serializer_class = CategoryDetailSerializer
      queryset = Category.objects.all()
+
 
 class AdminProductViewset(MultipleSerializerMixin, ModelViewSet):
 

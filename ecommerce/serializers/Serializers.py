@@ -8,7 +8,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['id', 'date_created', 'date_updated', 'name', 'price', 'product']
+        fields = ['id', 'date_created', 'date_updated', 'name', 'price', 'product', 'photo', 'color', 'description']
 
     def validate_price(self, value):
         if value < 1:
@@ -19,6 +19,18 @@ class ArticleSerializer(serializers.ModelSerializer):
         if value.active is False:
             raise serializers.ValidationError('Inactive product')
         return value
+    
+class ArticleDetailSerializer(serializers.ModelSerializer):
+
+    articles = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Article
+        fields = ['id', 'date_updated', 'name', 'price', 'product', 'photo', 'color', 'description']
+    def get_articles(self, instance):
+        queryset = instance.articles.filter(active=True)
+        serializer = ArticleSerializer(queryset, many=True)
+        return serializer.data
     
 
 class ProductListSerializer(serializers.ModelSerializer):
