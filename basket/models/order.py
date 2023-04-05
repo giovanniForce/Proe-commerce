@@ -1,4 +1,6 @@
+from typing import Iterable, Optional
 from django.db import models, transaction
+from django.utils.timezone import now
 from user_authentication.models import User
 import uuid
 
@@ -20,9 +22,14 @@ class Basket(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
-    @transaction.atomic
-    def disable(self):
-        if self.active is False:
-            return
-        self.active = False
-        self.save()
+
+    def save(self, force_insert: bool = False, force_update: bool = ..., using: Optional[str] = ..., update_fields: Optional[Iterable[str]] = ...) -> None:
+        # self.price = self.price + (self.price_bt*self.vat)
+        self.date_updated = now()
+        return super().save()
+
+    class Meta:
+        db_table = 'baskets'
+
+    def __str__(self) -> str:
+        return "{} -- {} -- {}".format(self.status,self.id, self.date_created)

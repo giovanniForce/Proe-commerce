@@ -52,6 +52,7 @@ urlpatterns = [
     path('auth/', include('user_authentication.urls.auth_urls')),
     path('users/', include('user_authentication.urls.user_urls')),
     path('products/', include('ecommerce.urls.ecom_urls')),
-    path('basket/', include('basket.urls'))
+    path('basket/', include('basket.urls.order_urls')),
+    path('basket_line/', include('basket.urls.order_line_urls'))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
