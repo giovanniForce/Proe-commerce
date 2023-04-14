@@ -15,20 +15,22 @@ const List = () => {
         {
           id: 1,
           product: "aaa",
+          img: "https://images.app.goo.gl/vfYHurB8asx9vCbw7",
           customer: "john",
           date: "1 march 2005",
           amount: 700,
           method: "cash on delivery",
-          status: "approved",
+          status: "Approved",
         },
         {
           id: 2,
           product: "aaa",
+          img: "https://images.app.goo.gl/vfYHurB8asx9vCbw7",
           customer: "john",
           date: "1 march 2005",
           amount: 700,
           method: "cash on delivery",
-          status: "approved",
+          status: "Pending",
         }
       ]
   return (
@@ -50,12 +52,18 @@ const List = () => {
           {rows.map((row) => (
             <TableRow key={row.id}>
               <TableCell className='tableCell'>{row.id}</TableCell>
-              <TableCell className='tableCell'>{row.product}</TableCell>
+              <TableCell className='tableCell'>
+                <div className='cellWrapper'>
+                  <img src={row.img} alt="" className='image' />
+                </div>
+              </TableCell>
               <TableCell className='tableCell'>{row.customer}</TableCell>
               <TableCell className='tableCell'>{row.date}</TableCell>
               <TableCell className='tableCell'>{row.amount}</TableCell>
               <TableCell className='tableCell'>{row.method}</TableCell>
-              <TableCell className='tableCell'>{row.status}</TableCell>
+              <TableCell className='tableCell'>
+                <span className={`status ${row.status}`}>{row.status}</span>
+              </TableCell>
             </TableRow>
 
           ))}
