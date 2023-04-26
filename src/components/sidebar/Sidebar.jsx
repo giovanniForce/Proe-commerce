@@ -1,9 +1,7 @@
 import React from 'react'
 import "./Sidebar.scss"
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
-import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import TurnedInNotOutlinedIcon from '@mui/icons-material/TurnedInNotOutlined';
 import ViewModuleOutlinedIcon from '@mui/icons-material/ViewModuleOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
@@ -14,12 +12,21 @@ import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { Link } from 'react-router-dom';
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import StoreIcon from "@mui/icons-material/Store";
+
+
+
+
 
 const Sidebar = () => {
   return (
     <div className='sidebar'>
         <div className='top'> 
-          <span className='logo'>PONDO Pix</span>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <span className="logo">Ecommerce</span>
+        </Link>
         </div>
         <hr /> 
         <div className='center'> 
@@ -30,20 +37,24 @@ const Sidebar = () => {
                 <span>Dashboard</span>
              </li>
               <p className='title'>LISTS</p>
-             <li>
-             <PersonOutlineOutlinedIcon className='icon' />
-                <span>Users</span>
-             </li>
+              <Link to="/users" style={{ textDecoration: "none" }}>
+            <li>
+              <PersonOutlineIcon className="icon" />
+              <span>Users</span>
+            </li>
+          </Link>
 
              <li>
              <CategoryOutlinedIcon className='icon' />
                 <span>Category</span>
              </li>
 
-             <li>
-             <Inventory2OutlinedIcon className='icon' />
-                <span>Products</span>
-             </li>
+             <Link to="/products" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Products</span>
+            </li>
+          </Link>
 
              <li>
              <TurnedInNotOutlinedIcon className='icon' />

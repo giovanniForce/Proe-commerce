@@ -1,38 +1,25 @@
 import "./datatable.scss";
-import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows } from "../datatable/datatablesource"
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
+
 
 const Datatable = () => {
-  const [data, setData] = useState(userRows);
+  const [columns, setColumns] = useState([]);
+  const [records, setRecords] =useState([]);
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/users/")
+    .then(res => {
+      console.log(Object.keys(res || {}))
+      console.log(res.data)
+    .catch((err) => console.log(err));
+    })
+  }, []);
 
-  const actionColumn = [
-    {
-      field: "action",
-      headerName: "Action",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
-            </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div>
-          </div>
-        );
-      },
-    },
-  ];
+ 
+
+  
   return (
     <div className="datatable">
       <div className="datatableTitle">
@@ -41,14 +28,34 @@ const Datatable = () => {
           Add New
         </Link>
       </div>
-      <DataGrid
-        className="datagrid"
-        rows={data}
-        columns={userColumns.concat(actionColumn)}
-        pageSize={9}
-        rowsPerPageOptions={[9]}
-        checkboxSelection
-      />
+      <div className=''>
+        <table>
+          <thead>
+            <tr>
+              {columns.map((c, i) => (
+                <th key={i}>{c}</th>
+              ))}
+            </tr>
+          </thead>
+
+          <tbody>
+            {
+              records.records?.map((d, i) => (
+                <tr key={i}>
+                  <td>{i.id}</td>
+                  <td>{i.email}</td>
+                  <td>{i.phone_number}</td>
+                  <td>{i.first_name}</td>
+                  <td>{i.last_name}</td>
+                  <td>{i.data_joined}</td>
+                  <td>{i.username}</td>
+
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
